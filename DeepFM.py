@@ -65,16 +65,16 @@ class DeepFM(BaseEstimator, TransformerMixin):
         self.graph = tf.Graph()
         with self.graph.as_default():
 
-            tf.set_random_seed(self.random_seed)
+            tf.compat.v1.set_random_seed(self.random_seed)
 
-            self.feat_index = tf.placeholder(tf.int32, shape=[None, None],
+            self.feat_index = tf.compat.v1.placeholder(tf.int32, shape=[None, None],
                                                  name="feat_index")  # None * F
-            self.feat_value = tf.placeholder(tf.float32, shape=[None, None],
+            self.feat_value = tf.compat.v1.placeholder(tf.float32, shape=[None, None],
                                                  name="feat_value")  # None * F
-            self.label = tf.placeholder(tf.float32, shape=[None, 1], name="label")  # None * 1
-            self.dropout_keep_fm = tf.placeholder(tf.float32, shape=[None], name="dropout_keep_fm")
-            self.dropout_keep_deep = tf.placeholder(tf.float32, shape=[None], name="dropout_keep_deep")
-            self.train_phase = tf.placeholder(tf.bool, name="train_phase")
+            self.label = tf.compat.v1.placeholder(tf.float32, shape=[None, 1], name="label")  # None * 1
+            self.dropout_keep_fm = tf.compat.v1.placeholder(tf.float32, shape=[None], name="dropout_keep_fm")
+            self.dropout_keep_deep = tf.compat.v1.placeholder(tf.float32, shape=[None], name="dropout_keep_deep")
+            self.train_phase = tf.compat.v1.placeholder(tf.bool, name="train_phase")
 
             self.weights = self._initialize_weights()
 
@@ -181,10 +181,10 @@ class DeepFM(BaseEstimator, TransformerMixin):
 
         # embeddings
         weights["feature_embeddings"] = tf.Variable(
-            tf.random_normal([self.feature_size, self.embedding_size], 0.0, 0.01),
+            tf.random.normal([self.feature_size, self.embedding_size], 0.0, 0.01),
             name="feature_embeddings")  # feature_size * K
         weights["feature_bias"] = tf.Variable(
-            tf.random_uniform([self.feature_size, 1], 0.0, 1.0), name="feature_bias")  # feature_size * 1
+            tf.random.uniform([self.feature_size, 1], 0.0, 1.0), name="feature_bias")  # feature_size * 1
 
         # deep layers
         num_layer = len(self.deep_layers)

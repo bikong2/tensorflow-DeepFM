@@ -4,6 +4,7 @@
 
 # C extensions
 *.so
+*.DS_Store
 
 # Distribution / packaging
 .Python
@@ -107,4 +108,3 @@ __pycache__/
 example/__pycache__/
 example/data/*.csv
 example/output/*.csv
-yellowfin.py
